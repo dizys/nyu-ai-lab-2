@@ -21,7 +21,7 @@ def main():
         "-v", "--verbose", help="verbose output", action="store_true", default=False)
     # for Knapsack problem
     parser.add_argument(
-        "--mode", help='solver mode, should be one of "cnf", "dpll" or "solver"', required=True)
+        "-m", "--mode", help='solver mode, should be one of "cnf", "dpll" or "solver"', required=True)
     parser.add_argument(
         "inputfile", help="input file path")
     args = parser.parse_args()
@@ -30,8 +30,10 @@ def main():
         with open(args.inputfile, 'r') as f:
             input_text = f.read()
     except FileNotFoundError:
-        print(f"Error: No such file or directory: {args.inputfile}")
+        print(f"Error: No such file or directory at {args.inputfile}")
         exit(1)
+
+    args.mode = args.mode.lower()
 
     if args.mode == "cnf":
         pass
@@ -39,14 +41,15 @@ def main():
         cnf_rep = text_to_cnf_rep(input_text)
         dpll = DPLL(cnf_rep, verbose=args.verbose)
         if not dpll.solve():
-            print("No solution")
+            print("NO VALID ASSIGNMENT")
         else:
             dpll.fill_unbounded_atoms()
             dpll.print_bounds()
     elif args.mode == "solver":
         pass
     else:
-        print("Invalid mode")
+        print(f"Error: Invalid mode {args.mode}")
+        exit(1)
 
 
 if __name__ == '__main__':
