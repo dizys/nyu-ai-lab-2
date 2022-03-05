@@ -249,11 +249,12 @@ class DPLL:
         """
         Solves the CNF representation.
         """
-        self.print_cnf()
+        if self.verbose:
+            self.print_cnf()
         try:
             while not self.is_finished():
                 legal = self.step()
-                if legal and not self.is_finished():
+                if self.verbose and legal and not self.is_finished():
                     self.print_cnf()
         except DPLLException:
             return None
@@ -271,3 +272,12 @@ class DPLL:
                 print(
                     f'unbound {atom}={"true" if fill_with else "false"}')
         return self.atom_bounds
+
+    def print_bounds(self):
+        """
+        Prints the current bounds.
+        """
+        for atom in self.atom_list:
+            if self.is_atom_bound(atom):
+                print(
+                    f'{atom}={"true" if self.atom_bounds[atom] else "false"}')

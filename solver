@@ -11,20 +11,42 @@ from solving import DPLL, text_to_cnf_rep
 
 
 def main():
-    cnf_rep = text_to_cnf_rep("""
-P Q !R
-P !Q R
-!P Q
-!Q R W
-!R W
-!W !X
-!W X
-    """)
-    solver = DPLL(cnf_rep, verbose=True)
-    result = solver.solve()
-    if result:
-        result = solver.fill_unbounded_atoms()
-    print(result)
+    """
+    Main function
+    """
+    parser = argparse.ArgumentParser(
+        description="A BNF to CNF converter and DPLL solver.")
+    # for N queens problem
+    parser.add_argument(
+        "-v", "--verbose", help="verbose output", action="store_true", default=False)
+    # for Knapsack problem
+    parser.add_argument(
+        "--mode", help='solver mode, should be one of "cnf", "dpll" or "solver"', required=True)
+    parser.add_argument(
+        "inputfile", help="input file path")
+    args = parser.parse_args()
+
+    try:
+        with open(args.inputfile, 'r') as f:
+            input_text = f.read()
+    except FileNotFoundError:
+        print(f"Error: No such file or directory: {args.inputfile}")
+        exit(1)
+
+    if args.mode == "cnf":
+        pass
+    elif args.mode == "dpll":
+        cnf_rep = text_to_cnf_rep(input_text)
+        dpll = DPLL(cnf_rep, verbose=args.verbose)
+        if not dpll.solve():
+            print("No solution")
+        else:
+            dpll.fill_unbounded_atoms()
+            dpll.print_bounds()
+    elif args.mode == "solver":
+        pass
+    else:
+        print("Invalid mode")
 
 
 if __name__ == '__main__':
