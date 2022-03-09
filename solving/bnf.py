@@ -52,3 +52,21 @@ def cnf_rep_to_text(cnf_rep: List[List[Tuple[str, bool]]]) -> str:
                 clause_str += '!' + atom[0]
         lines.append(clause_str)
     return '\n'.join(lines)
+
+
+def bnf_to_cnf_rep(bnf: str) -> List[List[Tuple[str, bool]]]:
+    """
+    Converts a BNF to a CNF representation.
+
+    :param bnf: The BNF to convert.
+    :return: The CNF representation of the BNF.
+    """
+
+    lexer = BNFLexer(InputStream(bnf))
+    stream = CommonTokenStream(lexer)
+    parser = BNFParser(stream)
+    tree = parser.bnf()
+    listener = BNFListener()
+    walker = ParseTreeWalker()
+    walker.walk(listener, tree)
+    return []

@@ -8,7 +8,7 @@ Spring 2022
 """
 
 import argparse
-from solving import DPLL, text_to_cnf_rep
+from solving import DPLL, text_to_cnf_rep, bnf_to_cnf_rep, cnf_rep_to_text
 
 
 def main():
@@ -37,7 +37,8 @@ def main():
     args.mode = args.mode.lower()
 
     if args.mode == "cnf":
-        pass
+        cnf_rep = bnf_to_cnf_rep(input_text)
+        print(cnf_rep_to_text(cnf_rep))
     elif args.mode == "dpll":
         cnf_rep = text_to_cnf_rep(input_text)
         dpll = DPLL(cnf_rep, verbose=args.verbose)

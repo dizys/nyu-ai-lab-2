@@ -12,5 +12,8 @@
     "[python]": {
         "editor.defaultFormatter": "ms-python.python"
     },
-    "cSpell.words": ["DPLL"]
+    "cSpell.words": ["ANTLR", "DPLL", "EBNF", "paren"],
+    "[antlr]": {
+        "editor.defaultFormatter": "mike-lischke.vscode-antlr4"
+    }
 }
