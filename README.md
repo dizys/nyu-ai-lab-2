@@ -1,6 +1,6 @@
 # nyu-ai-lab-2
 
-NYU Artificial Intelligence Course Lab 2: A BNF to CNF converter and generic DPLL solver.
+NYU Artificial Intelligence Course Lab 2: A BNF to CNF converter and generic DPLL solver. BNF parser is built with [ANTLR4](https://github.com/dizys/nyu-ai-lab-2/tree/main/antlr).
 
 ## Prerequisite
 
