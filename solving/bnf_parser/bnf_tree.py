@@ -19,6 +19,7 @@ def bnf_text_to_trees(text: str) -> List[BNFNode]:
     lexer = BNFLexer(InputStream(text))
     stream = CommonTokenStream(lexer)
     parser = BNFParser(stream)
+    parser.removeErrorListeners()
     parser.addErrorListener(BNFErrorListener())
 
     tree = parser.bnf()
