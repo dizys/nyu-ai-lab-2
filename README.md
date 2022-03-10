@@ -2,6 +2,8 @@
 
 NYU Artificial Intelligence Course Lab 2: A BNF to CNF converter and generic DPLL solver. BNF parser is built with [ANTLR4](https://github.com/dizys/nyu-ai-lab-2/tree/main/antlr).
 
+This implementation properly handles grouping (`()`) and symbol `_` in atom's names.
+
 ## Prerequisite
 
 -   Python 3.8+
