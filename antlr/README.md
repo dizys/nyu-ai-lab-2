@@ -49,7 +49,7 @@ Input your rule and press `Ctrl` + `D` to end the input stream. The parse tree (
 Parser rules (precedence of the operators are as in the order they appear):
 
 ```EBNF
-<BNF> ::= <BNF_RULE> (nl <BNF_RULE>)*
+<BNF> ::= <BNF_RULE> (nl+ <BNF_RULE>)*
 <BNF_RULE> ::= <CLAUSE>
 <CLAUSE> ::= atom
             | not <CLAUSE>
