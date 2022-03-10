@@ -3,34 +3,32 @@
 from antlr4 import *
 from io import StringIO
 import sys
-if sys.version_info[1] > 5:
-    from typing import TextIO
-else:
-    from typing.io import TextIO
+from typing import TextIO
 
 
 def serializedATN():
     with StringIO() as buf:
         buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\r")
-        buf.write("\66\4\2\t\2\4\3\t\3\4\4\t\4\3\2\3\2\3\2\7\2\f\n\2\f\2")
-        buf.write("\16\2\17\13\2\3\2\7\2\22\n\2\f\2\16\2\25\13\2\3\2\3\2")
-        buf.write("\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4#\n\4\3\4")
-        buf.write("\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\7\4\61\n")
-        buf.write("\4\f\4\16\4\64\13\4\3\4\2\3\6\5\2\4\6\2\2\2:\2\b\3\2\2")
-        buf.write("\2\4\30\3\2\2\2\6\"\3\2\2\2\b\r\5\4\3\2\t\n\7\13\2\2\n")
-        buf.write("\f\5\4\3\2\13\t\3\2\2\2\f\17\3\2\2\2\r\13\3\2\2\2\r\16")
-        buf.write("\3\2\2\2\16\23\3\2\2\2\17\r\3\2\2\2\20\22\7\13\2\2\21")
-        buf.write("\20\3\2\2\2\22\25\3\2\2\2\23\21\3\2\2\2\23\24\3\2\2\2")
-        buf.write("\24\26\3\2\2\2\25\23\3\2\2\2\26\27\7\2\2\3\27\3\3\2\2")
-        buf.write("\2\30\31\5\6\4\2\31\5\3\2\2\2\32\33\b\4\1\2\33#\7\n\2")
-        buf.write("\2\34\35\7\7\2\2\35#\5\6\4\b\36\37\7\3\2\2\37 \5\6\4\2")
-        buf.write(" !\7\4\2\2!#\3\2\2\2\"\32\3\2\2\2\"\34\3\2\2\2\"\36\3")
-        buf.write("\2\2\2#\62\3\2\2\2$%\f\7\2\2%&\7\5\2\2&\61\5\6\4\b\'(")
-        buf.write("\f\6\2\2()\7\6\2\2)\61\5\6\4\7*+\f\5\2\2+,\7\t\2\2,\61")
-        buf.write("\5\6\4\6-.\f\4\2\2./\7\b\2\2/\61\5\6\4\5\60$\3\2\2\2\60")
-        buf.write("\'\3\2\2\2\60*\3\2\2\2\60-\3\2\2\2\61\64\3\2\2\2\62\60")
-        buf.write("\3\2\2\2\62\63\3\2\2\2\63\7\3\2\2\2\64\62\3\2\2\2\7\r")
-        buf.write("\23\"\60\62")
+        buf.write(":\4\2\t\2\4\3\t\3\4\4\t\4\3\2\3\2\6\2\13\n\2\r\2\16\2")
+        buf.write("\f\3\2\7\2\20\n\2\f\2\16\2\23\13\2\3\2\7\2\26\n\2\f\2")
+        buf.write("\16\2\31\13\2\3\2\3\2\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4")
+        buf.write("\3\4\3\4\5\4\'\n\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4")
+        buf.write("\3\4\3\4\3\4\7\4\65\n\4\f\4\16\48\13\4\3\4\2\3\6\5\2\4")
+        buf.write("\6\2\2\2?\2\b\3\2\2\2\4\34\3\2\2\2\6&\3\2\2\2\b\21\5\4")
+        buf.write("\3\2\t\13\7\13\2\2\n\t\3\2\2\2\13\f\3\2\2\2\f\n\3\2\2")
+        buf.write("\2\f\r\3\2\2\2\r\16\3\2\2\2\16\20\5\4\3\2\17\n\3\2\2\2")
+        buf.write("\20\23\3\2\2\2\21\17\3\2\2\2\21\22\3\2\2\2\22\27\3\2\2")
+        buf.write("\2\23\21\3\2\2\2\24\26\7\13\2\2\25\24\3\2\2\2\26\31\3")
+        buf.write("\2\2\2\27\25\3\2\2\2\27\30\3\2\2\2\30\32\3\2\2\2\31\27")
+        buf.write("\3\2\2\2\32\33\7\2\2\3\33\3\3\2\2\2\34\35\5\6\4\2\35\5")
+        buf.write("\3\2\2\2\36\37\b\4\1\2\37\'\7\n\2\2 !\7\7\2\2!\'\5\6\4")
+        buf.write("\b\"#\7\3\2\2#$\5\6\4\2$%\7\4\2\2%\'\3\2\2\2&\36\3\2\2")
+        buf.write("\2& \3\2\2\2&\"\3\2\2\2\'\66\3\2\2\2()\f\7\2\2)*\7\5\2")
+        buf.write("\2*\65\5\6\4\b+,\f\6\2\2,-\7\6\2\2-\65\5\6\4\7./\f\5\2")
+        buf.write("\2/\60\7\t\2\2\60\65\5\6\4\6\61\62\f\4\2\2\62\63\7\b\2")
+        buf.write("\2\63\65\5\6\4\5\64(\3\2\2\2\64+\3\2\2\2\64.\3\2\2\2\64")
+        buf.write("\61\3\2\2\2\658\3\2\2\2\66\64\3\2\2\2\66\67\3\2\2\2\67")
+        buf.write("\7\3\2\2\28\66\3\2\2\2\b\f\21\27&\64\66")
         return buf.getvalue()
 
 
@@ -118,30 +116,40 @@ class BNFParser (Parser):
             self.enterOuterAlt(localctx, 1)
             self.state = 6
             self.bnf_rule()
-            self.state = 11
+            self.state = 15
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input, 0, self._ctx)
+            _alt = self._interp.adaptivePredict(self._input, 1, self._ctx)
             while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
                 if _alt == 1:
-                    self.state = 7
-                    self.match(BNFParser.NL)
                     self.state = 8
-                    self.bnf_rule()
-                self.state = 13
-                self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input, 0, self._ctx)
+                    self._errHandler.sync(self)
+                    _la = self._input.LA(1)
+                    while True:
+                        self.state = 7
+                        self.match(BNFParser.NL)
+                        self.state = 10
+                        self._errHandler.sync(self)
+                        _la = self._input.LA(1)
+                        if not (_la == BNFParser.NL):
+                            break
 
-            self.state = 17
+                    self.state = 12
+                    self.bnf_rule()
+                self.state = 17
+                self._errHandler.sync(self)
+                _alt = self._interp.adaptivePredict(self._input, 1, self._ctx)
+
+            self.state = 21
             self._errHandler.sync(self)
             _la = self._input.LA(1)
             while _la == BNFParser.NL:
-                self.state = 14
+                self.state = 18
                 self.match(BNFParser.NL)
-                self.state = 19
+                self.state = 23
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
 
-            self.state = 20
+            self.state = 24
             self.match(BNFParser.EOF)
         except RecognitionException as re:
             localctx.exception = re
@@ -177,7 +185,7 @@ class BNFParser (Parser):
         self.enterRule(localctx, 2, self.RULE_bnf_rule)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 22
+            self.state = 26
             self.clause(0)
         except RecognitionException as re:
             localctx.exception = re
@@ -243,56 +251,56 @@ class BNFParser (Parser):
         self.enterRecursionRule(localctx, 4, self.RULE_clause, _p)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 32
+            self.state = 36
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [BNFParser.ATOM]:
-                self.state = 25
+                self.state = 29
                 self.match(BNFParser.ATOM)
                 pass
             elif token in [BNFParser.NOT]:
-                self.state = 26
+                self.state = 30
                 self.match(BNFParser.NOT)
-                self.state = 27
+                self.state = 31
                 self.clause(6)
                 pass
             elif token in [BNFParser.LEFT_PAREN]:
-                self.state = 28
+                self.state = 32
                 self.match(BNFParser.LEFT_PAREN)
-                self.state = 29
+                self.state = 33
                 self.clause(0)
-                self.state = 30
+                self.state = 34
                 self.match(BNFParser.RIGHT_PAREN)
                 pass
             else:
                 raise NoViableAltException(self)
 
             self._ctx.stop = self._input.LT(-1)
-            self.state = 48
+            self.state = 52
             self._errHandler.sync(self)
-            _alt = self._interp.adaptivePredict(self._input, 4, self._ctx)
+            _alt = self._interp.adaptivePredict(self._input, 5, self._ctx)
             while _alt != 2 and _alt != ATN.INVALID_ALT_NUMBER:
                 if _alt == 1:
                     if self._parseListeners is not None:
                         self.triggerExitRuleEvent()
                     _prevctx = localctx
-                    self.state = 46
+                    self.state = 50
                     self._errHandler.sync(self)
                     la_ = self._interp.adaptivePredict(
-                        self._input, 3, self._ctx)
+                        self._input, 4, self._ctx)
                     if la_ == 1:
                         localctx = BNFParser.ClauseContext(
                             self, _parentctx, _parentState)
                         self.pushNewRecursionContext(
                             localctx, _startState, self.RULE_clause)
-                        self.state = 34
+                        self.state = 38
                         if not self.precpred(self._ctx, 5):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(
                                 self, "self.precpred(self._ctx, 5)")
-                        self.state = 35
+                        self.state = 39
                         self.match(BNFParser.AND)
-                        self.state = 36
+                        self.state = 40
                         self.clause(6)
                         pass
 
@@ -301,14 +309,14 @@ class BNFParser (Parser):
                             self, _parentctx, _parentState)
                         self.pushNewRecursionContext(
                             localctx, _startState, self.RULE_clause)
-                        self.state = 37
+                        self.state = 41
                         if not self.precpred(self._ctx, 4):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(
                                 self, "self.precpred(self._ctx, 4)")
-                        self.state = 38
+                        self.state = 42
                         self.match(BNFParser.OR)
-                        self.state = 39
+                        self.state = 43
                         self.clause(5)
                         pass
 
@@ -317,14 +325,14 @@ class BNFParser (Parser):
                             self, _parentctx, _parentState)
                         self.pushNewRecursionContext(
                             localctx, _startState, self.RULE_clause)
-                        self.state = 40
+                        self.state = 44
                         if not self.precpred(self._ctx, 3):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(
                                 self, "self.precpred(self._ctx, 3)")
-                        self.state = 41
+                        self.state = 45
                         self.match(BNFParser.IMPLIES)
-                        self.state = 42
+                        self.state = 46
                         self.clause(4)
                         pass
 
@@ -333,20 +341,20 @@ class BNFParser (Parser):
                             self, _parentctx, _parentState)
                         self.pushNewRecursionContext(
                             localctx, _startState, self.RULE_clause)
-                        self.state = 43
+                        self.state = 47
                         if not self.precpred(self._ctx, 2):
                             from antlr4.error.Errors import FailedPredicateException
                             raise FailedPredicateException(
                                 self, "self.precpred(self._ctx, 2)")
-                        self.state = 44
+                        self.state = 48
                         self.match(BNFParser.IFF)
-                        self.state = 45
+                        self.state = 49
                         self.clause(3)
                         pass
 
-                self.state = 50
+                self.state = 54
                 self._errHandler.sync(self)
-                _alt = self._interp.adaptivePredict(self._input, 4, self._ctx)
+                _alt = self._interp.adaptivePredict(self._input, 5, self._ctx)
 
         except RecognitionException as re:
             localctx.exception = re

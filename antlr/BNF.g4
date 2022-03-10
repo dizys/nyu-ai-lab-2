@@ -1,6 +1,6 @@
 grammar BNF;
 
-bnf: bnf_rule (NL bnf_rule)* NL* EOF;
+bnf: bnf_rule (NL+ bnf_rule)* NL* EOF;
 
 bnf_rule: clause;
 

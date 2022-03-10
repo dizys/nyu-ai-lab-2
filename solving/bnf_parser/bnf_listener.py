@@ -61,7 +61,7 @@ class BNFListener(ParseTreeListener):
             left_token_str = ctx.getChild(0).getText()
             if left_token_str == '(':
                 # Clause is a grouped clause
-                self.stack.append(BNFNode(BNFParser.GROUPED))
+                self.stack.append(BNFNode(BNFNode.GROUPED))
             else:
                 # Clause is a binary clause
                 operator_token = ctx.getChild(1).getPayload()
@@ -90,7 +90,8 @@ class BNFListener(ParseTreeListener):
             if left_token_str == '(':
                 # Clause is a grouped clause
                 child_node = self.stack.pop()
-                self.stack[-1].left_child = child_node
+                self.stack.pop()
+                self.stack.append(child_node)
             else:
                 # Clause is a binary clause
                 child_node = self.stack.pop()
