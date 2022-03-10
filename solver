@@ -37,7 +37,7 @@ def main():
     args.mode = args.mode.lower()
 
     if args.mode == "cnf":
-        cnf_rep = bnf_to_cnf_rep(input_text)
+        cnf_rep = bnf_to_cnf_rep(input_text, verbose=args.verbose)
         print(cnf_rep_to_text(cnf_rep))
     elif args.mode == "dpll":
         cnf_rep = text_to_cnf_rep(input_text)
@@ -48,7 +48,13 @@ def main():
             dpll.fill_unbounded_atoms()
             dpll.print_bounds()
     elif args.mode == "solver":
-        pass
+        cnf_rep = bnf_to_cnf_rep(input_text, verbose=args.verbose)
+        dpll = DPLL(cnf_rep, verbose=args.verbose)
+        if not dpll.solve():
+            print("NO VALID ASSIGNMENT")
+        else:
+            dpll.fill_unbounded_atoms()
+            dpll.print_bounds()
     else:
         print(f"Error: Invalid mode {args.mode}")
         exit(1)

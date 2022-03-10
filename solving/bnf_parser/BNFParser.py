@@ -3,12 +3,15 @@
 from antlr4 import *
 from io import StringIO
 import sys
-from typing import TextIO
+if sys.version_info[1] > 5:
+    from typing import TextIO
+else:
+    from typing.io import TextIO
 
 
 def serializedATN():
     with StringIO() as buf:
-        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\f")
+        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\r")
         buf.write("\66\4\2\t\2\4\3\t\3\4\4\t\4\3\2\3\2\3\2\7\2\f\n\2\f\2")
         buf.write("\16\2\17\13\2\3\2\7\2\22\n\2\f\2\16\2\25\13\2\3\2\3\2")
         buf.write("\3\3\3\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\5\4#\n\4\3\4")
@@ -46,7 +49,7 @@ class BNFParser (Parser):
                     "'\n'"]
 
     symbolicNames = ["<INVALID>", "LEFT_PAREN", "RIGHT_PAREN", "AND", "OR",
-                     "NOT", "IFF", "IMPLIES", "ATOM", "NL", "WS"]
+                     "NOT", "IFF", "IMPLIES", "ATOM", "NL", "WS", "ErrorCharacter"]
 
     RULE_bnf = 0
     RULE_bnf_rule = 1
@@ -65,6 +68,7 @@ class BNFParser (Parser):
     ATOM = 8
     NL = 9
     WS = 10
+    ErrorCharacter = 11
 
     def __init__(self, input: TokenStream, output: TextIO = sys.stdout):
         super().__init__(input, output)

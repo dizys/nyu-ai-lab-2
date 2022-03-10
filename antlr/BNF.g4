@@ -28,3 +28,5 @@ ATOM: [a-zA-Z0-9_]+;
 NL: '\n';
 
 WS: [ \t]+ -> skip;
+
+ErrorCharacter: .;

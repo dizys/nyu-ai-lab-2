@@ -16,8 +16,8 @@ def collect_atoms(cnf_rep: List[List[Tuple[str, bool]]]) -> List[str]:
     """
 
     atoms = []
-    for clause in cnf_rep:
-        for atom in clause:
+    for sentence in cnf_rep:
+        for atom in sentence:
             if atom[0] not in atoms:
                 atoms.append(atom[0])
     atoms.sort()
@@ -66,9 +66,9 @@ class DPLL:
         Finds a single atom in a clause.
         """
         atoms: List[Tuple[str, bool]] = []
-        for clause in self.cnf_rep:
-            if len(clause) == 1:
-                for atom_bound in clause:
+        for sentence in self.cnf_rep:
+            if len(sentence) == 1:
+                for atom_bound in sentence:
                     atoms.append(atom_bound)
         atoms.sort(key=lambda x: x[0])
         if len(atoms) == 0:
@@ -80,8 +80,8 @@ class DPLL:
         Checks if a literal is pure.
         """
         result = True
-        for clause in self.cnf_rep:
-            for atom_bound in clause:
+        for sentence in self.cnf_rep:
+            for atom_bound in sentence:
                 if atom_bound[0] == atom_str and atom_bound[1] != true_literal:
                     result = False
 
@@ -153,21 +153,21 @@ class DPLL:
         """
         new_cnf_rep: List[List[Tuple[str, bool]]] = []
         legal = True
-        for clause in self.cnf_rep:
-            new_clause: List[Tuple[str, bool]] = []
-            skip_clause = False
-            for atom_bound in clause:
+        for sentence in self.cnf_rep:
+            new_sentence: List[Tuple[str, bool]] = []
+            skip_sentence = False
+            for atom_bound in sentence:
                 if atom_bound[0] == atom and atom_bound[1] == value:
-                    skip_clause = True
+                    skip_sentence = True
                     break
                 if atom_bound[0] == atom and atom_bound[1] != value:
                     continue
-                new_clause.append(atom_bound)
-            if skip_clause:
+                new_sentence.append(atom_bound)
+            if skip_sentence:
                 continue
-            if len(new_clause) == 0:
+            if len(new_sentence) == 0:
                 legal = False
-            new_cnf_rep.append(new_clause)
+            new_cnf_rep.append(new_sentence)
         self.cnf_rep = new_cnf_rep
         return legal
 
@@ -181,8 +181,8 @@ class DPLL:
         """
         Checks if the CNF representation is legal.
         """
-        for clause in self.cnf_rep:
-            if len(clause) == 0:
+        for sentence in self.cnf_rep:
+            if len(sentence) == 0:
                 return False
         return True
 

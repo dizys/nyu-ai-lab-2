@@ -1,5 +1,6 @@
-from distutils.command.build_scripts import first_line_re
 from typing import Dict, List, Tuple
+
+from .bnf_parser import bnf_text_to_trees, BNFParserError
 
 
 def text_to_cnf_rep(text: str) -> List[List[Tuple[str, bool]]]:
@@ -14,18 +15,18 @@ def text_to_cnf_rep(text: str) -> List[List[Tuple[str, bool]]]:
     cnf_rep = []
     for line in lines:
         line = line.strip()
-        clause: List[Tuple[str, bool]] = []
+        sentence: List[Tuple[str, bool]] = []
         atoms = line.split(' ')
         for atom in atoms:
             atom = atom.strip()
             if atom == '':
                 continue
             if atom[0] == '!' or atom[0] == '~' or atom[0] == '¬':
-                clause.append((atom[1:], False))
+                sentence.append((atom[1:], False))
             else:
-                clause.append((atom, True))
-        clause.sort(key=lambda x: x[0])
-        cnf_rep.append(clause)
+                sentence.append((atom, True))
+        sentence.sort(key=lambda x: x[0])
+        cnf_rep.append(sentence)
     return cnf_rep
 
 
@@ -38,35 +39,97 @@ def cnf_rep_to_text(cnf_rep: List[List[Tuple[str, bool]]]) -> str:
     """
 
     lines = []
-    for clause in cnf_rep:
-        clause_str = ''
+    for sentence in cnf_rep:
+        sentence_str = ''
         first_in_clause = True
-        for atom in clause:
+        for atom in sentence:
             if first_in_clause:
                 first_in_clause = False
             else:
-                clause_str += ' '
+                sentence_str += ' '
             if atom[1]:
-                clause_str += atom[0]
+                sentence_str += atom[0]
             else:
-                clause_str += '!' + atom[0]
-        lines.append(clause_str)
+                sentence_str += '!' + atom[0]
+        lines.append(sentence_str)
     return '\n'.join(lines)
 
 
-def bnf_to_cnf_rep(bnf: str) -> List[List[Tuple[str, bool]]]:
+def print_rules(rules: List[List[Tuple[str, bool]]]):
+    for rule in rules:
+        print("  - ", rule)
+
+
+def remove_sentence_with_atom_and_its_negation(cnf_rep: List[List[Tuple[str, bool]]]) -> List[List[Tuple[str, bool]]]:
+    result: List[List[Tuple[str, bool]]] = []
+    for sentence in cnf_rep:
+        atom_dict: Dict[str, bool] = {}
+        is_sentence_valid = True
+        for atom_bound in sentence:
+            atom = atom_bound[0]
+            bound = atom_bound[1]
+            if atom in atom_dict:
+                if atom_dict[atom] != bound:
+                    is_sentence_valid = False
+                    break
+            else:
+                atom_dict[atom] = bound
+        if is_sentence_valid:
+            result.append(sentence)
+    return result
+
+
+def print_cnf_rep(cnf_rep: List[List[Tuple[str, bool]]]):
+    for sentence in cnf_rep:
+        print('  - ', sentence)
+
+
+def bnf_to_cnf_rep(bnf: str, verbose=False) -> List[List[Tuple[str, bool]]]:
     """
     Converts a BNF to a CNF representation.
 
     :param bnf: The BNF to convert.
     :return: The CNF representation of the BNF.
     """
+    rules = bnf_text_to_trees(bnf)
+    if verbose:
+        print('Parsed rules:')
+        print_rules(rules)
 
-    lexer = BNFLexer(InputStream(bnf))
-    stream = CommonTokenStream(lexer)
-    parser = BNFParser(stream)
-    tree = parser.bnf()
-    listener = BNFListener()
-    walker = ParseTreeWalker()
-    walker.walk(listener, tree)
-    return []
+    for rule in rules:
+        rule.eliminate_iff()
+    if verbose:
+        print('\nStep 1. Eliminating IFF "<=>":')
+        print_rules(rules)
+
+    for rule in rules:
+        rule.eliminate_implies()
+    if verbose:
+        print('\nStep 2. Eliminating IMPLIES "=>":')
+        print_rules(rules)
+
+    for rule in rules:
+        rule.push_not_to_atom_level()
+    if verbose:
+        print('\nStep 3. Pushing NOT to atom level:')
+        print_rules(rules)
+
+    for rule in rules:
+        rule.apply_distribution_rule()
+    if verbose:
+        print('\nStep 4. Applying distribution rule:')
+        print_rules(rules)
+
+    cnf_rep: List[List[Tuple[str, bool]]] = []
+    for rule in rules:
+        rule_cnf_rep = rule.to_cnf_rep()
+        cnf_rep.extend(rule_cnf_rep)
+    if verbose:
+        print('\nStep 5. Separate top-level conjunctions and convert to CNF:')
+        print_cnf_rep(cnf_rep)
+
+    cnf_rep = remove_sentence_with_atom_and_its_negation(cnf_rep)
+    if verbose:
+        print('\nStep 6. Remove any sentence that includes an atom and its negation:')
+        print_cnf_rep(cnf_rep)
+    return cnf_rep

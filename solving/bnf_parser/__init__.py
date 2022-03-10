@@ -1,4 +1,3 @@
-from .BNFLexer import *
-from .BNFListener import *
-from .BNFParser import *
-from .BNFTree import *
+from .bnf_node import *
+from .bnf_tree import *
+from .bnf_listener import BNFParserError
