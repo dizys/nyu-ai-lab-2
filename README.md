@@ -36,7 +36,7 @@ pip3 install -r requirements.txt
 or if you want to specify ANTLR4 runtime manually:
 
 ```bash
-pip3 install antlr4-python3-runtime
+pip3 install antlr4-python3-runtime==4.9.3
 ```
 
 ### Script usages
