@@ -81,7 +81,13 @@ def remove_sentence_with_atom_and_its_negation(cnf_rep: List[List[Tuple[str, boo
 
 def print_cnf_rep(cnf_rep: List[List[Tuple[str, bool]]]):
     for sentence in cnf_rep:
-        print('  - ', sentence)
+        sentence_rep = []
+        for atom in sentence:
+            atom_rep = atom[0]
+            if not atom[1]:
+                atom_rep = '¬' + atom_rep
+            sentence_rep.append(atom_rep)
+        print('  - ', " ".join(sentence_rep))
 
 
 def bnf_to_cnf_rep(bnf: str, verbose=False) -> List[List[Tuple[str, bool]]]:

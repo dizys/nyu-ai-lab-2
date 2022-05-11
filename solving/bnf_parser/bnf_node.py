@@ -19,13 +19,13 @@ class BNFNode:
 
     def operator_val_to_name(self, operator_val: int) -> str:
         if operator_val == BNFNode.AND:
-            return "AND"
+            return "∧"
         elif operator_val == BNFNode.OR:
-            return "OR"
+            return "∨"
         elif operator_val == BNFNode.IMPLIES:
-            return "IMPLIES"
+            return "=>"
         elif operator_val == BNFNode.IFF:
-            return "IFF"
+            return "<=>"
         else:
             return "UNKNOWN"
 
@@ -38,13 +38,18 @@ class BNFNode:
     def __str__(self) -> str:
         result = ""
         if self.type == BNFNode.ATOM:
-            result = f"(ATOM {self.left_child})"
+            if type(self.left_child) is tuple:
+                result = f"{self.left_child[0]}"
+                if not self.left_child[1]:
+                    result = f"¬{result}"
+            else:
+                result = f"{self.left_child}"
         elif self.type == BNFNode.NOT:
-            result = f"(NOT {self.left_child.__str__()})"
+            result = f"¬{self.left_child.__str__()}"
         elif self.type == BNFNode.BINARY_CLAUSE:
-            result = f"({self.operator_val_to_name(self.operator)} {self.left_child.__str__()}  {self.right_child.__str__()})"
+            result = f"({self.left_child.__str__()} {self.operator_val_to_name(self.operator)} {self.right_child.__str__()})"
         elif self.type == BNFNode.GROUPED:
-            result = f"(GROUP {self.left_child.__str__()})"
+            result = f"({self.left_child.__str__()})"
         else:
             result = f"Unknown node type: {self.type}"
         return result
